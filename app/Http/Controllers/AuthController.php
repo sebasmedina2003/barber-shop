@@ -7,7 +7,7 @@ use App\Models\User;
 use Auth;
 use Db;
 
-class AuthController extends Controller
+class AuthController
 {
     public function login(Request $request)
     {
