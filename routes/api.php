@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ClientController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix'=>'v1'], function(){
@@ -22,6 +23,11 @@ Route::group(['prefix'=>'v1'], function(){
         Route::post('/logout', 'logout')
         ->name('logout')
         ->middleware($sanctum_middleware);
+    });
+
+    Route::controller(ClientController::class)->group(function() use($client_middlewares){
+        Route::post('/client', 'store')
+        ->name('register');
     });
 
 });
