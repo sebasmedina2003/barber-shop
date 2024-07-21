@@ -6,20 +6,22 @@ use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\ClientModel;
-use Db;
+use DB;
 
 class ClientController
 {
     public function store(Request $request){
         $validatedData = $request->validate([
-            'email' => 'required|string|email|unique:users',
+            'email' => 'required|string|email',
             'password' => 'required|string|min:6',
             'name' => 'required|string',
             'last_name' => 'required|string',
+            'cedula' => 'required|string|min:7|max:8',
+            'telefono' => 'required|string|min:11|max:11',
         ]);
 
         try{
-            Db::transaction(function() use($validatedData){
+            DB::transaction(function() use($validatedData){
                 $user = new User();
                 $user->email = $validatedData['email'];
                 $user->password = bcrypt($validatedData['password']);
@@ -28,8 +30,11 @@ class ClientController
     
                 $client = new ClientModel();
                 $client->user_id = $user->id;
-                $client->name = $validatedData['name'];
-                $client->last_name = $validatedData['last_name'];
+                $client->nombre = $validatedData['name'];
+                $client->apellido = $validatedData['last_name'];
+                $client->cedula = $validatedData['cedula'];
+                $client->telefono = $validatedData['telefono'];
+                $client->direccion = "";
                 $client->save();
             });
 
