@@ -16,6 +16,5 @@ class ServiceModel extends Model
         'precio',
         'tiempo_estimado',
         'id_barbero',
-        'id_cliente'
     ];
 }
