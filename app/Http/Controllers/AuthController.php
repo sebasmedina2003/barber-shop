@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\BarberModel;
+use App\Models\ClientModel;
 use Auth;
 
 class AuthController
@@ -20,11 +22,14 @@ class AuthController
 
         $user = User::where('email', $request->email)->firstOrFail();
         $abilities = $user->is_barber ? ['barbero'] : ['cliente'];
+        $profile = $user->is_barber ? BarberModel::where('id_usuario', $user->id)->first() : ClientModel::where('id_usuario', $user->id)->first();
 
         return response()->json([
             'message' => 'Logged in successfully',
             'token' => $user->createToken('auth_token', $abilities)->plainTextToken,
             'abilities' => $abilities[0],
+            'name' => "$profile->nombre $profile->apellido",
+            'email' => $user->email,
         ], 200);
     }
 
