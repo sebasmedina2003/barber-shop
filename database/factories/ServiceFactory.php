@@ -19,11 +19,11 @@ class ServiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'titulo' => $this->faker->sentence(3),
-            'descripcion' => $this->faker->sentence(10),
-            'precio' => $this->faker->randomFloat(2, 10, 100),
-            'tiempo_estimado' => $this->faker->randomFloat(2, 10, 100),
-            'id_barbero' => $this->faker->numberBetween(1, BarberModel::count()),
+            'titulo' => fake()->sentence(3),
+            'descripcion' => fake()->sentence(10),
+            'precio' => fake()->randomFloat(2, 10, 100),
+            'tiempo_estimado' => fake()->numberBetween(15, 120),
+            'id_barbero' => fake()->numberBetween(1, BarberModel::count()),
         ];
     }
 }

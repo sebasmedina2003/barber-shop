@@ -22,7 +22,7 @@ class AuthController
 
         $user = User::where('email', $request->email)->firstOrFail();
         $abilities = $user->is_barber ? ['barbero'] : ['cliente'];
-        $profile = $user->is_barber ? BarberModel::where('id_usuario', $user->id)->first() : ClientModel::where('id_usuario', $user->id)->first();
+        $profile = $user->is_barber ? BarberModel::where('user_id', $user->id)->first() : ClientModel::where('user_id', $user->id)->first();
 
         return response()->json([
             'message' => 'Logged in successfully',
