@@ -3,18 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\CitaModel;
+use App\Mail\Notification;
 use Illuminate\Http\Request;
+use Mail;
 
 class CitaController
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
     public function store(Request $request, int $id_servicio)
     {
         $cita = new CitaModel();
@@ -26,27 +20,15 @@ class CitaController
         return response()->json(['message' => 'Cita creada con éxito'], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(int $cita_id)
+    public function notificar(Request $request, int $id_cita)
     {
-        return response()->json(CitaModel::with('servicio')->find($cita_id), 200);
+        $cita = CitaModel::find($id_cita);
+        $user = $cita->client->user;
+        
+        Mail::to($user->email)->send(new Notification());
+
+        return response()->json(['message' => 'Notificación enviada con éxito'], 200);
+        
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, CitaModel $citaModel)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(CitaModel $citaModel)
-    {
-        //
-    }
 }

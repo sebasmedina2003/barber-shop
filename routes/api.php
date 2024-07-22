@@ -27,7 +27,7 @@ Route::group(['prefix'=>'v1'], function(){
         ->name('register');
     });
 
-    Route::controller(CitaController::class)->group(function() use($client_middlewares){
+    Route::controller(CitaController::class)->group(function() use($client_middlewares, $barbero_middlewares){
         Route::post('/cita/{id_servicio}', 'store')
         ->name('cita.store')
         ->middleware($client_middlewares);
@@ -35,6 +35,10 @@ Route::group(['prefix'=>'v1'], function(){
         Route::get('/cita/{cita_id}', 'show')
         ->name('cita.show')
         ->middleware($client_middlewares);
+
+        Route::post('/cita/{cita_id}/notificar', 'notificar')
+        ->name('cita.notificar')
+        ->middleware($barbero_middlewares);
     });
 
 });
