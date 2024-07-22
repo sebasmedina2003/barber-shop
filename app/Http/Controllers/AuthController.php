@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\ClientModel;
 use Auth;
-use Db;
 
 class AuthController
 {
