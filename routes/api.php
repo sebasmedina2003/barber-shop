@@ -31,6 +31,11 @@ Route::group(['prefix'=>'v1'], function(){
         Route::get('/service/cita/finalizadas', 'index_finalizadas')
         ->name('cita.index_finalizadas')
         ->middleware($client_middlewares);
+
+        // Mostrar todas las citas
+        Route::get('/service/cita', 'index_citas')
+        ->name('cita.index')
+        ->middleware($client_middlewares);
     });
 
     Route::controller(CitaController::class)->group(function() use($client_middlewares, $barbero_middlewares, $sanctum_middleware){
@@ -61,7 +66,6 @@ Route::group(['prefix'=>'v1'], function(){
         Route::get('/service', 'index')
         ->name('service.index');
 
-
         // Crear un nuevo servicio
         Route::post('/barbero/service', 'store')
         ->name('service.store')
@@ -88,6 +92,11 @@ Route::group(['prefix'=>'v1'], function(){
         // Mostrar citas finalizadas
         Route::get('/barbero/service/cita/finalizadas', 'index_citas_finalizadas')
         ->name('barbero.cita.index_finalizadas')
+        ->middleware($barbero_middlewares);
+
+        // Mostrar todas las citas
+        Route::get('/barbero/service/cita', 'index_cita')
+        ->name('barbero.cita.index')
         ->middleware($barbero_middlewares);
     });
 

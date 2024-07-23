@@ -11,7 +11,12 @@ class BarberController
     public function index_citas_finalizadas(Request $request){
         $barber = $request->user()->barber;
 
-        $appointments = $barber->citas;
+        $appointments = $barber->citas_finalizadas;
         return response()->json($appointments, 200);
+    }
+
+    public function index_cita(Request $request){
+        $citas= $request->user()->barber->citas;
+        return response()->json($citas, 200);
     }
 }

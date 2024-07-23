@@ -35,8 +35,13 @@ class Barber extends Model
         return $this->hasMany(Service::class, 'id_barbero');
     }
 
-    public function citas()
+    public function citas_finalizadas()
     {
         return $this->hasManyThrough(Cita::class, Service::class, 'id_barbero', 'id_servicio', 'id')->where('cita.estado', 'finalizada');
+    }
+
+    public function citas()
+    {
+        return $this->hasManyThrough(Cita::class, Service::class, 'id_barbero', 'id_servicio', 'id');
     }
 }

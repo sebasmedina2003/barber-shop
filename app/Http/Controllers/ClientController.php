@@ -53,4 +53,10 @@ class ClientController
         return response()->json($appointments, 200);
     }
 
+    public function index_citas(Request $request){
+        $citas = $request->user()->client->citas;
+
+        return response()->json($citas, 200);
+    }
+
 }
