@@ -12,7 +12,6 @@ Route::group(['prefix'=>'v1'], function(){
     $barbero_middlewares = ['auth:sanctum', 'ability:barbero'];
     $sanctum_middleware = ['auth:sanctum'];
 
-    // Rutas de autenticación y registro de usuarios
     Route::controller(AuthController::class)->group(function() use($sanctum_middleware){
         Route::post('/login', 'login')
         ->name('login');
@@ -23,33 +22,46 @@ Route::group(['prefix'=>'v1'], function(){
     });
 
     Route::controller(ClientController::class)->group(function() use($client_middlewares){
+        // Crear un nuevo cliente
         Route::post('/client', 'store')
         ->name('register');
     });
 
-    Route::controller(CitaController::class)->group(function() use($client_middlewares, $barbero_middlewares){
-        Route::post('/cita/{id_servicio}', 'store')
+    Route::controller(CitaController::class)->group(function() use($client_middlewares, $barbero_middlewares, $sanctum_middleware){
+        // Crear un nuevo servicio
+        Route::post('/service/{id_servicio}/cita', 'store')
         ->name('cita.store')
         ->middleware($client_middlewares);
 
-        Route::get('/cita/{cita_id}', 'show')
+        // Mostrar una cita
+        Route::get('/service/cita/{cita_id}', 'show')
         ->name('cita.show')
-        ->middleware($client_middlewares);
+        ->middleware($sanctum_middleware);
 
-        Route::post('/cita/{cita_id}/notificar', 'notificar')
+        // Notificar a un cliente sobre una cita
+        Route::post('/service/cita/{cita_id}/notificar', 'notificar')
         ->name('cita.notificar')
         ->middleware($barbero_middlewares);
     });
 
-    Route::controller(ServiceController::class)->group(function() use($barbero_middlewares){
+    Route::controller(ServiceController::class)->group(function() use($barbero_middlewares, $client_middlewares){
+
+        // Mostrar todos los servicios
+        Route::get('/service', 'index')
+        ->name('service.index');
+
+
+        // Crear un nuevo servicio
         Route::post('/barbero/{id_barbero}/service', 'store')
         ->name('service.store')
         ->middleware($barbero_middlewares);
 
+        // Mostrar un servicio
         Route::put('/barbero/service/{id_service}', 'update')
         ->name('service.update')
         ->middleware($barbero_middlewares);
 
+        // Eliminar un servicio
         Route::delete('/barbero/service/{id_service}', 'destroy')
         ->name('service.destroy')
         ->middleware($barbero_middlewares);

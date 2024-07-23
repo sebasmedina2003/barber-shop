@@ -17,4 +17,10 @@ class Service extends Model
         'tiempo_estimado',
         'id_barbero',
     ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'id_barbero'
+    ];
 }

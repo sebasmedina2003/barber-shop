@@ -14,6 +14,9 @@ class Cita extends Model
     protected $table = 'cita';
     protected $fillable = ['id_cliente', 'id_servicio', 'estado'];
 
+    protected $hidden = ['updated_at', 'id_cliente', 'id_servicio'];
+
+
     public function servicio(){
         return $this->belongsTo(Service::class, 'id_servicio', 'id');
     }

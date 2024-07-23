@@ -31,4 +31,9 @@ class CitaController
         
     }
 
+    public function show(Request $request, int $cita_id)
+    {
+        $cita = Cita::with('servicio')->find($cita_id);
+        return response()->json($cita, 200);
+    }
 }

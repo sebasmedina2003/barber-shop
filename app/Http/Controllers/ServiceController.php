@@ -5,10 +5,15 @@ use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Models\Service;
+use App\Models\Barber;
 use DB;
 
 class ServiceController
-{
+{   
+    public function index() {
+        $data = Barber::with('services')->get(['id', 'nombre', 'apellido']);
+        return response()->json($data, 200);
+    }
     public function store(Request $request, int $id_barbero) {
         $validatedData = $request->validate([
             'titulo' => 'required|string',
