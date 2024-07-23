@@ -42,6 +42,11 @@ Route::group(['prefix'=>'v1'], function(){
         Route::post('/service/cita/{cita_id}/notificar', 'notificar')
         ->name('cita.notificar')
         ->middleware($barbero_middlewares);
+
+        // Actualizar una cita
+        Route::put('/service/cita/{cita_id}', 'update')
+        ->name('cita.update')
+        ->middleware($sanctum_middleware);
     });
 
     Route::controller(ServiceController::class)->group(function() use($barbero_middlewares, $client_middlewares){
