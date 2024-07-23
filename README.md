@@ -6,5 +6,17 @@
 php artisan tinker
 ```
 ```cmd
-UserFactory::new()->times(4)->withProfile()->create()
+UserFactory::new()->times(15)->withProfile()->create()
+```
+
+## Generar servicios
+### Dentro de tinker usar el siguiente comando
+```cmd
+Database\Factories\ServiceFactory::new()->times(10)->withProfile()->create()
+```
+
+## Generar Citas
+### Dentro del tinker usar el siguiente comando
+```cmd
+Database\Factories\CitaFactory::new()->times(10)->withProfile()->create()
 ```
