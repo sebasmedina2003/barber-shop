@@ -39,18 +39,13 @@ class CitaController
 
     public function update(Request $request, int $cita_id)
     {
-        $request->validate([
-            'estado' => 'in:pendiente,aceptada,cancelada,finalizada|default:null',
-            'fecha' => 'date|default:null'
-        ]); 
-
         $cita = Cita::find($cita_id);
         
-        if($request->estado){
+        if($request->has('estado')){
             $cita->estado = $request->estado;
         }
 
-        if($request->fecha){
+        if($request->has('fecha')){
             $cita->fecha = $request->fecha;
         }
 

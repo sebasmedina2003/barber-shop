@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('cita', function (Blueprint $table) {
             $table->dropColumn('estado');
-            $table->enum('estado', ['pendiente', 'aceptada', 'rechazada', 'cancelada'])->default('pendiente');
+            $table->enum('estado', ['pendiente', 'aceptada', 'cancelada', 'finalizada'])->default('pendiente');
         });
     }
 

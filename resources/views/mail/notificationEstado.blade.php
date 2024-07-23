@@ -7,7 +7,7 @@
 <body>
     <h1>Notificación de Estado de Cita</h1>
     
-    <p>Estimado(a) {{ $client_name }},</p>
+    <p>Estimado(a) {{ $nombre_cliente }},</p>
     
     <p>Le informamos que el estado de su cita programada para el {{ $fecha_cita }} ha sido actualizado.</p>
     
