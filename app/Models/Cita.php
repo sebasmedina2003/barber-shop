@@ -12,10 +12,11 @@ class Cita extends Model
     use HasFactory;
 
     protected $table = 'cita';
-    protected $fillable = ['id_cliente', 'id_servicio', 'estado'];
+    protected $fillable = ['id_cliente', 'id_servicio', 'estado', 'fecha'];
 
     protected $hidden = ['updated_at', 'id_cliente', 'id_servicio'];
 
+    public const ESTADOS = ['pendiente', 'aceptada', 'cancelada', 'finalizada'];
 
     public function servicio(){
         return $this->belongsTo(Service::class, 'id_servicio', 'id');
