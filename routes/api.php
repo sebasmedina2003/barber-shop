@@ -57,7 +57,7 @@ Route::group(['prefix'=>'v1'], function(){
 
 
         // Crear un nuevo servicio
-        Route::post('/barbero/{id_barbero}/service', 'store')
+        Route::post('/barbero/service', 'store')
         ->name('service.store')
         ->middleware($barbero_middlewares);
 

@@ -14,7 +14,7 @@ class ServiceController
         $data = Barber::with('services')->get(['id', 'nombre', 'apellido']);
         return response()->json($data, 200);
     }
-    public function store(Request $request, int $id_barbero) {
+    public function store(Request $request) {
         $validatedData = $request->validate([
             'titulo' => 'required|string',
             'descripcion' => 'required|string',
@@ -22,10 +22,12 @@ class ServiceController
             'tiempo_estimado' => 'required|string',
         ]);
 
+        $barbero = $request->user()->barber;
+
         try{
-            DB::transaction(function() use($validatedData, $id_barbero) {
+            DB::transaction(function() use($validatedData, $barbero) {
                 $service = new Service();
-                $service->id_barbero = $id_barbero;
+                $service->id_barbero = $barbero->id;
                 $service->titulo = $validatedData['titulo'];
                 $service->descripcion = $validatedData['descripcion'];
                 $service->precio = $validatedData['precio'];
