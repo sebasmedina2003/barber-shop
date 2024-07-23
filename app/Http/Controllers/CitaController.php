@@ -12,9 +12,14 @@ class CitaController
 {
     public function store(Request $request, int $id_servicio)
     {
+        $request->validate([
+            'fecha' => 'required|date',
+        ]);
+
         $cita = new Cita();
         $cita->id_cliente = $request->user()->id;
         $cita->id_servicio = $id_servicio;
+        $cita->fecha = $request->fecha;
         $cita->save();
 
         return response()->json(['message' => 'Cita creada con éxito'], 201);
