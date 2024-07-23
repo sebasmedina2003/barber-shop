@@ -4,6 +4,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CitaController;
+use App\Http\Controllers\BarberController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix'=>'v1'], function(){
@@ -79,6 +80,14 @@ Route::group(['prefix'=>'v1'], function(){
         // Servicios por barbero
         Route::get('/barbero/service', 'indexByBarber')
         ->name('barber.service.index')
+        ->middleware($barbero_middlewares);
+    });
+
+    Route::controller(BarberController::class)->group(function() use($barbero_middlewares){
+
+        // Mostrar citas finalizadas
+        Route::get('/barbero/service/cita/finalizadas', 'index_citas_finalizadas')
+        ->name('barbero.cita.index_finalizadas')
         ->middleware($barbero_middlewares);
     });
 

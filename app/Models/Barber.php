@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Cita;
+use App\Models\Service;
 
 class Barber extends Model
 {
@@ -31,5 +33,10 @@ class Barber extends Model
     public function services()
     {
         return $this->hasMany(Service::class, 'id_barbero');
+    }
+
+    public function citas()
+    {
+        return $this->hasManyThrough(Cita::class, Service::class, 'id_barbero', 'id_servicio', 'id')->where('cita.estado', 'finalizada');
     }
 }
