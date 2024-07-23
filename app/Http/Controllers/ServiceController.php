@@ -78,4 +78,9 @@ class ServiceController
 
         return response()->json(['message' => 'Service deleted successfully'], 200);
     }
+
+    public function indexByBarber(Request $request) {
+        $data = Service::where('id_barbero', $request->user()->barber->id)->get();
+        return response()->json($data, 200);
+    }
 }

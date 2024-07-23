@@ -70,6 +70,11 @@ Route::group(['prefix'=>'v1'], function(){
         Route::delete('/barbero/service/{id_service}', 'destroy')
         ->name('service.destroy')
         ->middleware($barbero_middlewares);
+
+        // Servicios por barbero
+        Route::get('/barbero/service', 'indexByBarber')
+        ->name('barber.service.index')
+        ->middleware($barbero_middlewares);
     });
 
 });
