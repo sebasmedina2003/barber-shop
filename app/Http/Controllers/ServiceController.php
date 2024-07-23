@@ -60,7 +60,7 @@ class ServiceController
         return response()->json(['message' => 'Service updated successfully'], 200);
     }
 
-    public function delete(Request $request, int $id_service) {
+    public function destroy(Request $request, int $id_service) {
         try {
             DB::transaction(function() use($id_service) {
                 $service = Service::findOrFail($id_service);
