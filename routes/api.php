@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CitaController;
@@ -38,6 +38,20 @@ Route::group(['prefix'=>'v1'], function(){
 
         Route::post('/cita/{cita_id}/notificar', 'notificar')
         ->name('cita.notificar')
+        ->middleware($barbero_middlewares);
+    });
+
+    Route::controller(ServiceController::class)->group(function() use($barbero_middlewares){
+        Route::post('/barbero/{id_barbero}/service', 'store')
+        ->name('service.store')
+        ->middleware($barbero_middlewares);
+
+        Route::put('/barbero/service/{id_service}', 'update')
+        ->name('service.update')
+        ->middleware($barbero_middlewares);
+
+        Route::delete('/barbero/service/{id_service}', 'destroy')
+        ->name('service.destroy')
         ->middleware($barbero_middlewares);
     });
 

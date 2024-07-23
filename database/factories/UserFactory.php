@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
-use App\Models\BarberModel;
-use App\Models\ClientModel;
+use App\Models\Barber;
+use App\Models\Client;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -50,7 +50,7 @@ class UserFactory extends Factory
         return $this->afterCreating(function (User $user) {
             // Create a new profile instance
             if($user->is_barber){
-                $profile = new BarberModel();
+                $profile = new Barber();
                 $profile->user_id = $user->id;
                 $profile->nombre = fake()->firstName();
                 $profile->apellido = fake()->lastName();
@@ -59,7 +59,7 @@ class UserFactory extends Factory
                 $profile->direccion = fake()->address();
                 $profile->save();
             } else {
-                $profile = new ClientModel();
+                $profile = new Client();
                 $profile->user_id = $user->id;
                 $profile->nombre = fake()->firstName();
                 $profile->apellido = fake()->lastName();

@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\ServiceModel;
-use App\Models\ClientModel;
+use App\Models\Service;
+use App\Models\Client;
 
-class CitaModel extends Model
+class Cita extends Model
 {
     use HasFactory;
 
@@ -15,11 +15,11 @@ class CitaModel extends Model
     protected $fillable = ['id_cliente', 'id_servicio', 'estado'];
 
     public function servicio(){
-        return $this->belongsTo(ServiceModel::class, 'id_servicio', 'id');
+        return $this->belongsTo(Service::class, 'id_servicio', 'id');
     }
 
     public function client(){
-        return $this->belongsTo(ClientModel::class, 'id_cliente', 'id');
+        return $this->belongsTo(Client::class, 'id_cliente', 'id');
     }
 
 }

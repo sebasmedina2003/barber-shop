@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\ClientModel;
+use App\Models\Client;
 use DB;
 
 class ClientController
@@ -28,7 +28,7 @@ class ClientController
                 $user->is_barber = false;
                 $user->save();
     
-                $client = new ClientModel();
+                $client = new Client();
                 $client->user_id = $user->id;
                 $client->nombre = $validatedData['name'];
                 $client->apellido = $validatedData['last_name'];

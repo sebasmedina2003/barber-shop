@@ -1,25 +1,26 @@
 <?php
-
 namespace App\Http\Controllers;
+
+use Illuminate\Database\UniqueConstraintViolationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use DB;
 use App\Models\Service;
+use DB;
 
 class ServiceController
 {
-    public function store(Request $request){
+    public function store(Request $request, int $id_barbero) {
         $validatedData = $request->validate([
             'titulo' => 'required|string',
             'descripcion' => 'required|string',
             'precio' => 'required|numeric',
             'tiempo_estimado' => 'required|string',
-            'id_barbero' => 'required|string',
-            'id_cliente' => 'required|string',
         ]);
 
         try{
-            DB::transaction(function() use($validatedData){
+            DB::transaction(function() use($validatedData, $id_barbero) {
                 $service = new Service();
+                $service->id_barbero = $id_barbero;
                 $service->titulo = $validatedData['titulo'];
                 $service->descripcion = $validatedData['descripcion'];
                 $service->precio = $validatedData['precio'];
@@ -34,9 +35,8 @@ class ServiceController
         return response()->json(['message' => 'Service created successfully'], 201);
     }
 
-    public function update(Request $request) {
+    public function update(Request $request, int $id_service) {
         $validatedData = $request->validate([
-            'id' => 'required|numeric',
             'titulo' => 'required|string',
             'descripcion' => 'required|string',
             'precio' => 'required|numeric',
@@ -44,8 +44,8 @@ class ServiceController
         ]);
 
         try {
-            DB::transaction(function() use($validatedData) {
-                $service = Service::findOrFail($request->id);
+            DB::transaction(function() use($validatedData, $id_service) {
+                $service = Service::findOrFail($id_service);
                 $service->titulo = $validatedData['titulo'];
                 $service->descripcion = $validatedData['descripcion'];
                 $service->precio = $validatedData['precio'];
@@ -60,10 +60,10 @@ class ServiceController
         return response()->json(['message' => 'Service updated successfully'], 200);
     }
 
-    public function delete(Request $request) {
+    public function delete(Request $request, int $id_service) {
         try {
-            DB::transaction(function() use($request) {
-                $service = Service::findOrFail($request->id);
+            DB::transaction(function() use($id_service) {
+                $service = Service::findOrFail($id_service);
                 $service->delete();
             });
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CitaModel;
+use App\Models\Cita;
 use App\Mail\Notification;
 use Illuminate\Http\Request;
 use Mail;
@@ -11,7 +11,7 @@ class CitaController
 {
     public function store(Request $request, int $id_servicio)
     {
-        $cita = new CitaModel();
+        $cita = new Cita();
         $cita->id_cliente = $request->user()->id;
         $cita->id_servicio = $id_servicio;
         $cita->estado = true;
@@ -22,7 +22,7 @@ class CitaController
 
     public function notificar(Request $request, int $id_cita)
     {
-        $cita = CitaModel::find($id_cita);
+        $cita = Cita::find($id_cita);
         $user = $cita->client->user;
         
         Mail::to($user->email)->send(new Notification());

@@ -3,11 +3,11 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\ServiceModel;
-use App\Models\BarberModel;
+use App\Models\Service;
+use App\Models\Barber;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ServiceModel>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Service>
  */
 class ServiceFactory extends Factory
 {
@@ -23,7 +23,7 @@ class ServiceFactory extends Factory
             'descripcion' => fake()->sentence(10),
             'precio' => fake()->randomFloat(2, 10, 100),
             'tiempo_estimado' => fake()->numberBetween(15, 120),
-            'id_barbero' => fake()->numberBetween(1, BarberModel::count()),
+            'id_barbero' => fake()->numberBetween(1, Barber::count()),
         ];
     }
 }
