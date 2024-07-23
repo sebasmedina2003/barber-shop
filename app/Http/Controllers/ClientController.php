@@ -6,6 +6,7 @@ use Illuminate\Database\UniqueConstraintViolationException;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Client;
+use App\Models\Cita;
 use DB;
 
 class ClientController
@@ -44,4 +45,12 @@ class ClientController
 
         return response()->json(['message' => 'User created successfully'], 201);
     }
+    
+    public function index_finalizadas(Request $request){
+        $client = $request->user()->client;
+
+        $appointments = Cita::where('estado', 'finalizada')->where('id_cliente', $client->id)->orderBy('fecha')->get();
+        return response()->json($appointments, 200);
+    }
+
 }

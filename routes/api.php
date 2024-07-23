@@ -25,6 +25,11 @@ Route::group(['prefix'=>'v1'], function(){
         // Crear un nuevo cliente
         Route::post('/client', 'store')
         ->name('register');
+
+        // Mostrar citas finalizadas
+        Route::get('/service/cita/finalizadas', 'index_finalizadas')
+        ->name('cita.index_finalizadas')
+        ->middleware($client_middlewares);
     });
 
     Route::controller(CitaController::class)->group(function() use($client_middlewares, $barbero_middlewares, $sanctum_middleware){
